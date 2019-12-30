@@ -16,12 +16,12 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Publish Blazor webassembly using dotnet
-      run: dotnet publish -c Release
+      run: dotnet publish -c Release --no-build -o ./
     - name: Publish generated Blazor webassembly to Netlify
       uses: netlify/actions/cli@master
       env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       with:
-          args: deploy --dir=BlazorOnNetlify/bin/Release/netstandard2.1/publish/BlazorOnNetlify/dist --prod
+          args: deploy --dir=BlazorOnNetlify/dist --prod
           secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
